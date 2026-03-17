@@ -1,46 +1,78 @@
-# Astro Starter Kit: Basics
+# Arham Code Blog
 
-```sh
-npm create astro@latest -- --template basics
+A personal tech blog built with Astro, Tailwind CSS, and Content Collections. Features bilingual support (English & Indonesian), dark/light mode, and a clean developer-centric design.
+
+## Features
+
+- **Astro + Tailwind CSS** - High performance static site
+- **Bilingual Support** - English and Indonesian languages
+- **Dark/Light Mode** - Theme toggle with persistent storage
+- **Content Collections** - Type-safe Markdown/MDX blog posts
+- **Code Highlighting** - Shiki syntax highlighting
+- **SEO Optimized** - Meta tags, OpenGraph, RSS feed
+- **Responsive Design** - Mobile-first approach
+
+## Tech Stack
+
+- **Framework:** Astro v6
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide Astro
+- **State:** Nano Stores
+- **Content:** MDX with Zod validation
+
+## Project Structure
+
+```
+src/
+├── components/       # UI components (Header, Footer, PostCard, etc.)
+├── content/
+│   └── blog/       # Markdown blog posts
+├── i18n/           # Translation files (en.json, id.json)
+├── layouts/        # BaseLayout with SEO
+├── pages/          # Route pages
+│   └── [lang]/     # Dynamic language routes
+├── stores/         # Nano Stores (theme)
+└── utils/          # Helper functions
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Getting Started
 
-## 🚀 Project Structure
+```bash
+# Install dependencies
+npm install
 
-Inside of your Astro project, you'll see the following folders and files:
+# Start development server
+npm run dev
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Adding Blog Posts
 
-## 🧞 Commands
+Create a new Markdown file in `src/content/blog/`:
 
-All commands are run from the root of the project, from a terminal:
+```markdown
+---
+title: "Your Post Title"
+description: "Post description"
+pubDate: 2026-03-17
+tags: ["Flutter", "Dart"]
+categories: ["Flutter"]
+lang: en  # or 'id' for Indonesian
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Your content here...
+```
 
-## 👀 Want to learn more?
+## Language
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Posts without `lang` default to English
+- Use `lang: id` for Indonesian posts
+
+## License
+
+MIT
