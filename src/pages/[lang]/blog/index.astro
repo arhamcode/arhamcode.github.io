@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { getTranslation } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en' }, props: { locale: 'en' } },
+    { params: { lang: 'id' }, props: { locale: 'id' } }
+  ];
+}
+
+const { locale } = Astro.props as { locale: 'en' | 'id' };
+const t = getTranslation(locale);
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = locale === 'en'
+  ? allPosts.filter(p => !p.data.lang || p.data.lang === 'en')
+  : allPosts.filter(p => p.data.lang === 'id');
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+const allCategories = [...new Set(posts.flatMap(post => post.data.categories))];
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout 
+  title={t.blog.title}
+  description={t.blog.description}
+  locale={locale}
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {t.blog.title}
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400">
+        {t.blog.description}
+      </p>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <aside class="lg:w-64 flex-shrink-0">
+        <div class="sticky top-24">
+          <div class="mb-8">
+            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+              {t.blog.tags}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 text-sm rounded-full bg-primary text-white">
+                {t.blog.all}
+              </span>
+              {allTags.map(tag => (
+                <a 
+                  href={`/${locale}/blog/${tag}`}
+                  class="px-3 py-1.5 text-sm rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary/10 transition-colors"
+                >
+                  {tag}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+              {t.blog.categories}
+            </h3>
+            <ul class="space-y-2">
+              {allCategories.map(category => (
+                <li>
+                  <span class="text-gray-600 dark:text-gray-400 text-sm">
+                    {category}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <div class="flex-1">
+        {sortedPosts.length > 0 ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {sortedPosts.map(post => (
+              <PostCard 
+                title={post.data.title}
+                description={post.data.description}
+                slug={post.id}
+                pubDate={post.data.pubDate}
+                tags={post.data.tags}
+                locale={locale}
+              />
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-12">
+            <p class="text-gray-500 dark:text-gray-400">{t.blog.noPosts}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,151 @@
+---
+import { Sun, Moon, Github, Menu, X } from 'lucide-astro';
+import LanguagePicker from './LanguagePicker.astro';
+import { getTranslation, type Locale } from '../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const t = getTranslation(locale);
+
+const currentLocale = locale;
+const getNavHref = (path: string) => {
+  if (currentLocale === 'en') return path;
+  return `/${currentLocale}${path === '/' ? '' : path}`;
+};
+
+const navItems = [
+  { href: '/', label: t.nav.home },
+  { href: '/blog', label: t.nav.blog },
+  { href: '/about', label: t.nav.about }
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href={getNavHref('/')} class="flex items-center gap-2 font-bold text-xl text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors">
+        <span class="text-primary">&lt;/&gt;</span>
+        <span>arhamcode</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6">
+        {navItems.map(item => (
+          <a 
+            href={getNavHref(item.href)} 
+            class:list={[
+              "text-sm font-medium transition-colors hover:text-primary dark:hover:text-primary",
+              currentPath === item.href || currentPath.startsWith(item.href + '/') ? "text-primary" : "text-gray-600 dark:text-gray-300"
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+        
+        <a 
+          href="https://github.com/arhamcode" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+        >
+          <Github size={20} />
+        </a>
+
+        <LanguagePicker currentLocale={locale} />
+
+        <button 
+          id="theme-toggle" 
+          class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Toggle theme"
+        >
+          <Sun class="hidden dark:block" size={20} />
+          <Moon class="block dark:hidden" size={20} />
+        </button>
+      </div>
+
+      <div class="md:hidden flex items-center gap-2">
+        <LanguagePicker currentLocale={locale} />
+        
+        <button 
+          id="mobile-theme-toggle"
+          class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Toggle theme"
+        >
+          <Sun class="hidden dark:block" size={20} />
+          <Moon class="block dark:hidden" size={20} />
+        </button>
+        
+        <button 
+          id="mobile-menu-toggle"
+          class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Toggle menu"
+        >
+          <Menu size={24} class="block dark:hidden" />
+          <X size={24} class="hidden dark:block" />
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden pb-4">
+      {navItems.map(item => (
+        <a 
+          href={getNavHref(item.href)}
+          class:list={[
+            "block py-2 text-base font-medium transition-colors hover:text-primary",
+            currentPath === item.href ? "text-primary" : "text-gray-600 dark:text-gray-300"
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>
+
+<script>
+  import { themeStore, toggleTheme, getTheme } from '../stores/theme';
+
+  function applyTheme(mode: string) {
+    if (mode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+
+  const initTheme = () => {
+    const saved = getTheme();
+    applyTheme(saved);
+  };
+
+  initTheme();
+
+  themeStore.subscribe((state) => {
+    applyTheme(state.mode);
+  });
+
+  const setupToggle = (id: string) => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        toggleTheme();
+      });
+    }
+  };
+
+  setupToggle('theme-toggle');
+  setupToggle('mobile-theme-toggle');
+
+  const menuBtn = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>

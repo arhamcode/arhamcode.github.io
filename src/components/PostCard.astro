@@ -1,0 +1,47 @@
+---
+import { Calendar, Clock } from 'lucide-astro';
+import { formatDate, calculateReadingTime } from '../utils/readingTime';
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  pubDate: Date;
+  tags?: string[];
+  locale?: string;
+}
+
+const { title, description, slug, pubDate, tags = [], locale = 'en' } = Astro.props;
+---
+
+<a 
+  href={`/${locale}/blog/${slug}`}
+  class="group block p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg transition-all duration-300"
+>
+  <div class="flex flex-col gap-3">
+    <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+      <span class="flex items-center gap-1">
+        <Calendar size={14} />
+        {formatDate(pubDate)}
+      </span>
+    </div>
+
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+      {title}
+    </h3>
+
+    <p class="text-gray-600 dark:text-gray-400 line-clamp-2">
+      {description}
+    </p>
+
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mt-2">
+        {tags.slice(0, 3).map(tag => (
+          <span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary dark:bg-primary/20">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+  </div>
+</a>

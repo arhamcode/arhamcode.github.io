@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Github, Linkedin, Mail } from 'lucide-astro';
+import { getTranslation } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en' }, props: { locale: 'en' } },
+    { params: { lang: 'id' }, props: { locale: 'id' } }
+  ];
+}
+
+const { locale } = Astro.props as { locale: 'en' | 'id' };
+const t = getTranslation(locale);
+---
+
+<BaseLayout 
+  title={t.about.title} 
+  description={locale === 'en' ? "Learn more about Arham Anwar, a Flutter developer passionate about clean architecture and elegant code." : "Pelajari lebih lanjut tentang Arham Anwar, pengembang Flutter yang passionate tentang clean architecture dan kode yang elegan."}
+  locale={locale}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">
+      {t.about.title}
+    </h1>
+
+    <div class="prose dark:prose-invert max-w-none prose-lg">
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+        {t.about.intro}
+      </p>
+
+      <h2>{t.about.focusTitle}</h2>
+      <ul>
+        {t.about.focus.map(item => (
+          <li innerHTML={item.replace(' - ', ' – ')}></li>
+        ))}
+      </ul>
+
+      <h2>{t.about.techStackTitle}</h2>
+      <ul>
+        {t.about.techStack.map(item => (
+          <li>{item}</li>
+        ))}
+      </ul>
+
+      <h2>{t.about.connectTitle}</h2>
+      <p>
+        {locale === 'en' ? 'Feel free to reach out or follow me on social media:' : 'Silakan hubungi atau follow saya di media sosial:'}
+      </p>
+      
+      <div class="flex flex-wrap gap-4 not-prose mt-6">
+        <a 
+          href="https://github.com/arhamcode"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary hover:text-primary transition-colors"
+        >
+          <Github size={20} />
+          GitHub
+        </a>
+        <a 
+          href="https://linkedin.com/in/arhamcode"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary hover:text-primary transition-colors"
+        >
+          <Linkedin size={20} />
+          LinkedIn
+        </a>
+        <a 
+          href="mailto:arham@arhamcode.com"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary hover:text-primary transition-colors"
+        >
+          <Mail size={20} />
+          Email
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
