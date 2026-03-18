@@ -107,7 +107,9 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
-  import { themeStore, toggleTheme, getTheme } from '../stores/theme';
+  function getStoredTheme() {
+    return localStorage.getItem('theme') || 'dark';
+  }
 
   function applyTheme(mode: string) {
     if (mode === 'dark') {
@@ -115,18 +117,39 @@ const currentPath = Astro.url.pathname;
     } else {
       document.documentElement.classList.remove('dark');
     }
+    localStorage.setItem('theme', mode);
   }
 
-  const initTheme = () => {
-    const saved = getTheme();
+  function initTheme() {
+    const saved = getStoredTheme();
     applyTheme(saved);
-  };
+  }
+
+  function toggleTheme() {
+    const current = getStoredTheme();
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    updateIcons(next);
+  }
+
+  function updateIcons(mode: string) {
+    const buttons = document.querySelectorAll('#theme-toggle, #mobile-theme-toggle');
+    buttons.forEach((btn) => {
+      const sunIcon = btn.querySelector('.dark\\:block');
+      const moonIcon = btn.querySelector('.dark\\:hidden');
+      if (sunIcon && moonIcon) {
+        if (mode === 'dark') {
+          (sunIcon as HTMLElement).style.display = 'block';
+          (moonIcon as HTMLElement).style.display = 'none';
+        } else {
+          (sunIcon as HTMLElement).style.display = 'none';
+          (moonIcon as HTMLElement).style.display = 'block';
+        }
+      }
+    });
+  }
 
   initTheme();
-
-  themeStore.subscribe((state) => {
-    applyTheme(state.mode);
-  });
 
   const setupToggle = (id: string) => {
     const btn = document.getElementById(id);
