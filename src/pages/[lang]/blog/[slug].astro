@@ -12,13 +12,11 @@ export async function getStaticPaths() {
   
   const paths = [];
   for (const locale of locales) {
-    const posts = locale === 'en'
-      ? allPosts.filter(p => !p.data.lang || p.data.lang === 'en')
-      : allPosts.filter(p => p.data.lang === 'id');
+    const posts = allPosts.filter(p => p.id.startsWith(locale + '/'));
     
     for (const post of posts) {
       paths.push({
-        params: { lang: locale, slug: post.id },
+        params: { lang: locale, slug: post.id.split('/')[1] },
         props: { post, locale }
       });
     }
@@ -37,76 +35,79 @@ const readingTime = calculateReadingTime(post.body || '');
   description={post.data.description}
   type="article"
   locale={locale}
+  showSidebar={false}
 >
-  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <article class="max-w-none">
+    <!-- Back Link -->
     <a 
       href={`/${locale}/blog`} 
-      class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors mb-8"
+      class="inline-flex items-center gap-1.5 text-sm text-[#3B49DF] dark:text-[#a5b4fc] hover:underline mb-6"
     >
-      <ArrowLeft size={16} />
+      <ArrowLeft size={14} />
       {t.blog.backToBlog}
     </a>
 
-    <header class="mb-12">
-      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+    <!-- Header -->
+    <header class="bg-white dark:bg-[#1a1a1a] rounded-md border border-[#e5e5e5] dark:border-[#404040] p-5 mb-6">
+      <div class="flex flex-wrap items-center gap-4 text-xs text-[#71717a] dark:text-[#a1a1a1] mb-3">
         <span class="flex items-center gap-1">
-          <Calendar size={16} />
+          <Calendar size={14} />
           {formatDate(post.data.pubDate)}
         </span>
         <span class="flex items-center gap-1">
-          <Clock size={16} />
+          <Clock size={14} />
           {readingTime}
         </span>
       </div>
       
-      <h1 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+      <h1 class="text-2xl md:text-3xl font-bold text-[#171717] dark:text-white mb-3">
         {post.data.title}
       </h1>
       
-      <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+      <p class="text-base text-[#575757] dark:text-[#a1a1a1] leading-relaxed mb-4">
         {post.data.description}
       </p>
 
       {post.data.tags.length > 0 && (
-        <div class="flex flex-wrap gap-2 mt-6">
+        <div class="flex flex-wrap gap-2">
           {post.data.tags.map(tag => (
             <a 
               href={`/${locale}/blog/${tag}`}
-              class="inline-flex items-center gap-1 px-3 py-1.5 text-sm rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+              class="text-sm text-[#3B49DF] dark:text-[#a5b4fc] hover:underline"
             >
-              <Tag size={14} />
-              {tag}
+              #{tag}
             </a>
           ))}
         </div>
       )}
     </header>
 
-    <div class="prose prose-lg dark:prose-invert max-w-none 
-      prose-headings:font-semibold prose-headings:tracking-tight
-      prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-      prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300
-      prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-      prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm
-      prose-pre:bg-darker prose-pre:border prose-pre:border-gray-800
-      prose-img:rounded-xl prose-img:shadow-lg
-      prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic
-      prose-ul:list-disc prose-ol:list-decimal
-      prose-li:marker:text-primary
+    <!-- Content -->
+    <div class="bg-white dark:bg-[#1a1a1a] rounded-md border border-[#e5e5e5] dark:border-[#404040] p-5 md:p-6
+      prose prose-sm md:prose-base dark:prose-invert max-w-none 
+      prose-headings:font-bold prose-headings:text-[#171717] dark:prose-headings:text-white
+      prose-h1:text-xl prose-h2:text-lg prose-h3:text-base
+      prose-p:text-[#171717] dark:prose-p:text-[#d4d4d4] prose-p:leading-relaxed
+      prose-a:text-[#3B49DF] dark:prose-a:text-[#a5b4fc] prose-a:no-underline hover:prose-a:underline
+      prose-code:bg-[#f5f5f5] dark:prose-code:bg-[#262626] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-[#3B49DF] dark:prose-code:text-[#a5b4fc] prose-code:font-mono prose-code:text-sm
+      prose-pre:bg-[#0a0a0a] prose-pre:rounded-md prose-pre:border prose-pre:border-[#404040] prose-pre:p-4
+      prose-img:rounded-md
+      prose-blockquote:border-l-4 prose-blockquote:border-[#3B49DF] prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-[#575757] dark:prose-blockquote:text-[#a1a1a1]
+      prose-ul:list-disc prose-ul:pl-5 prose-ol:list-decimal prose-ol:pl-5
+      prose-li:text-[#171717] dark:prose-li:text-[#d4d4d4]
     ">
       <Content />
     </div>
 
-    <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-      <div class="flex items-center justify-between">
-        <a 
-          href={`/${locale}/blog`} 
-          class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
-        >
-          <ArrowLeft size={16} />
-          {t.blog.backToBlog}
-        </a>
-      </div>
+    <!-- Footer -->
+    <footer class="mt-6 pt-6 border-t border-[#e5e5e5] dark:border-[#404040]">
+      <a 
+        href={`/${locale}/blog`} 
+        class="inline-flex items-center gap-1.5 text-sm text-[#3B49DF] dark:text-[#a5b4fc] hover:underline font-medium"
+      >
+        <ArrowLeft size={14} />
+        {t.blog.backToBlog}
+      </a>
     </footer>
   </article>
 </BaseLayout>

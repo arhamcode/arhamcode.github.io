@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTranslation } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: 'en' }, props: { locale: 'en' } },
+    { params: { lang: 'id' }, props: { locale: 'id' } }
+  ];
+}
+
+const { locale } = Astro.props as { locale: 'en' | 'id' };
+const t = getTranslation(locale);
+---
+
+<BaseLayout 
+  title={locale === 'en' ? 'Privacy Policy' : 'Kebijakan Privasi'} 
+  description={locale === 'en' ? "Privacy Policy for Arham Code Blog" : "Kebijakan Privasi untuk Blog Arham Code"}
+  locale={locale}
+  showSidebar={false}
+>
+  <div class="bg-white dark:bg-[#1a1a1a] rounded-md border border-[#e5e5e5] dark:border-[#404040] p-5 md:p-6">
+    <h1 class="text-2xl md:text-3xl font-bold text-[#171717] dark:text-white mb-6">
+      {locale === 'en' ? 'Privacy Policy' : 'Kebijakan Privasi'}
+    </h1>
+
+    <div class="prose prose-sm dark:prose-invert max-w-none text-[#171717] dark:text-[#d4d4d4]">
+      <p class="text-sm text-[#575757] dark:text-[#a1a1a1] mb-4">
+        {locale === 'en' 
+          ? 'Last updated: March 2025'
+          : 'Terakhir diperbarui: Maret 2025'}
+      </p>
+
+      <h2 class="text-lg font-bold text-[#171717] dark:text-white mt-6 mb-3">
+        {locale === 'en' ? '1. Information We Collect' : '1. Informasi yang Kami Kumpulkan'}
+      </h2>
+      <p class="text-sm text-[#575757] dark:text-[#a1a1a1] mb-3">
+        {locale === 'en'
+          ? 'We do not collect any personal information from our visitors. Our blog is static and does not require user registration or data submission.'
+          : 'Kami tidak mengumpulkan informasi pribadi apapun dari pengunjung kami. Blog kami bersifat statis dan tidak memerlukan registrasi pengguna atau pengiriman data.'}
+      </p>
+
+      <h2 class="text-lg font-bold text-[#171717] dark:text-white mt-6 mb-3">
+        {locale === 'en' ? '2. Third-Party Services' : '2. Layanan Pihak Ketiga'}
+      </h2>
+      <p class="text-sm text-[#575757] dark:text-[#a1a1a1] mb-3">
+        {locale === 'en'
+          ? 'Our blog may contain links to third-party websites. We are not responsible for the privacy practices of these websites.'
+          : 'Blog kami mungkin berisi tautan ke situs web pihak ketiga. Kami tidak bertanggung jawab atas praktik privasi situs web tersebut.'}
+      </p>
+
+      <h2 class="text-lg font-bold text-[#171717] dark:text-white mt-6 mb-3">
+        {locale === 'en' ? '3. Cookies' : '3. Cookies'}
+      </h2>
+      <p class="text-sm text-[#575757] dark:text-[#a1a1a1] mb-3">
+        {locale === 'en'
+          ? 'We do not use cookies to track or store any personal information.'
+          : 'Kami tidak menggunakan cookies untuk melacak atau menyimpan informasi pribadi apapun.'}
+      </p>
+
+      <h2 class="text-lg font-bold text-[#171717] dark:text-white mt-6 mb-3">
+        {locale === 'en' ? '4. Changes to This Policy' : '4. Perubahan pada Kebijakan Ini'}
+      </h2>
+      <p class="text-sm text-[#575757] dark:text-[#a1a1a1] mb-3">
+        {locale === 'en'
+          ? 'We may update this privacy policy from time to time. Any changes will be posted on this page.'
+          : 'Kami dapat memperbarui kebijakan privasi ini dari waktu ke waktu. Setiap perubahan akan diposting di halaman ini.'}
+      </p>
+
+      <h2 class="text-lg font-bold text-[#171717] dark:text-white mt-6 mb-3">
+        {locale === 'en' ? '5. Contact Us' : '5. Hubungi Kami'}
+      </h2>
+      <p class="text-sm text-[#575757] dark:text-[#a1a1a1] mb-3">
+        {locale === 'en'
+          ? 'If you have any questions about this privacy policy, please contact us at arham@arhamcode.com'
+          : 'Jika Anda memiliki pertanyaan tentang kebijakan privasi ini, silakan hubungi kami di arham@arhamcode.com'}
+      </p>
+    </div>
+  </div>
+</BaseLayout>

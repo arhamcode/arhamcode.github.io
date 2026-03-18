@@ -9,13 +9,17 @@ export async function GET() {
     title: 'Arham Code Blog',
     description: 'Flutter Development, Clean Architecture, and Software Engineering',
     site: 'https://arhamcode.github.io',
-    items: sortedPosts.map(post => ({
-      title: post.data.title,
-      pubDate: post.data.pubDate,
-      description: post.data.description,
-      link: `/en/blog/${post.id}/`,
-      categories: post.data.tags
-    })),
+    items: sortedPosts.map(post => {
+      const [lang, ...slugParts] = post.id.split('/');
+      const slug = slugParts.join('/');
+      return {
+        title: post.data.title,
+        pubDate: post.data.pubDate,
+        description: post.data.description,
+        link: `/${lang}/blog/${slug}/`,
+        categories: post.data.tags
+      };
+    }),
     customData: `<language>en-us</language>`
   });
 }

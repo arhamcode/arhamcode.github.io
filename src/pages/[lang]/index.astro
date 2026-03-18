@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
-import { ArrowRight, Code2, Database, Smartphone, Server } from 'lucide-astro';
 import { getCollection } from 'astro:content';
 import { getTranslation } from '../../i18n/utils';
 
@@ -16,79 +15,49 @@ const { locale } = Astro.props as { locale: 'en' | 'id' };
 const t = getTranslation(locale);
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const posts = locale === 'en'
-  ? allPosts.filter(p => !p.data.lang || p.data.lang === 'en')
-  : allPosts.filter(p => p.data.lang === 'id');
-const recentPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 4);
-
-const techStack = [
-  { name: 'Flutter', icon: Smartphone, desc: locale === 'en' ? 'Cross-platform mobile development' : 'Pengembangan mobile cross-platform' },
-  { name: 'Dart', icon: Code2, desc: locale === 'en' ? 'Language for Flutter apps' : 'Bahasa untuk aplikasi Flutter' },
-  { name: 'Firebase', icon: Server, desc: locale === 'en' ? 'Backend & authentication' : 'Backend & autentikasi' },
-  { name: 'PostgreSQL', icon: Database, desc: locale === 'en' ? 'Relational database' : 'Database relasional' },
-  { name: 'Clean Architecture', icon: Server, desc: locale === 'en' ? 'Software design pattern' : 'Pola desain software' },
-  { name: 'REST APIs', icon: Server, desc: locale === 'en' ? 'API design & integration' : 'Desain & integrasi API' }
-];
+const posts = allPosts.filter(p => p.id.startsWith(locale + '/'));
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredPost = sortedPosts[0];
+const recentPosts = sortedPosts.slice(1, 6);
 ---
 
 <BaseLayout 
   title={locale === 'en' ? 'Home' : 'Beranda'} 
-  description={locale === 'en' ? "Arham Anwar's personal tech blog - Flutter Development, Clean Architecture, and more." : "Blog teknologi pribadi Arham Anwar - Flutter Development, Clean Architecture, dan lainnya."}
+  description={t.hero.description}
   locale={locale}
 >
-  <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 dark:from-primary/10 dark:to-secondary/10"></div>
-    
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative">
-      <div class="max-w-3xl">
-        <p class="text-primary font-medium mb-4">{t.hero.greeting}</p>
-        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-          {t.hero.title}
-          <span class="block text-2xl md:text-4xl font-normal text-gray-600 dark:text-gray-400 mt-2">
-            {t.hero.subtitle}
-          </span>
-        </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-          {t.hero.description}
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a 
-            href={`/${locale}/blog`}
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
-          >
-            {t.hero.readBlog}
-            <ArrowRight size={18} />
-          </a>
-          <a 
-            href="https://github.com/arhamcode" 
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          >
-            {t.hero.github}
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Featured Post -->
+  {featuredPost && (
+    <section class="mb-6">
+      <h2 class="text-lg font-bold text-[#171717] dark:text-white mb-3">Featured</h2>
+      <PostCard 
+        title={featuredPost.data.title}
+        description={featuredPost.data.description}
+        slug={featuredPost.id.split('/')[1]}
+        pubDate={featuredPost.data.pubDate}
+        tags={featuredPost.data.tags}
+        locale={locale}
+        featured={true}
+      />
+    </section>
+  )}
 
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="flex items-center justify-between mb-12">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-        {t.home.recentPosts}
-      </h2>
-      <a href={`/${locale}/blog`} class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium">
-        {t.home.viewAll} <ArrowRight size={18} />
+  <!-- Latest Posts -->
+  <section>
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-bold text-[#171717] dark:text-white">Latest Posts</h2>
+      <a href={`/${locale}/blog`} class="text-sm text-[#3B49DF] dark:text-[#a5b4fc] font-medium hover:underline">
+        {t.home.viewAll}
       </a>
     </div>
     
     {recentPosts.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-4">
         {recentPosts.map(post => (
           <PostCard 
             title={post.data.title}
             description={post.data.description}
-            slug={post.id}
+            slug={post.id.split('/')[1]}
             pubDate={post.data.pubDate}
             tags={post.data.tags}
             locale={locale}
@@ -97,30 +66,8 @@ const techStack = [
       </div>
     ) : (
       <div class="text-center py-12">
-        <p class="text-gray-500 dark:text-gray-400">{t.home.noPosts}</p>
+        <p class="text-[#575757] dark:text-[#a1a1a1]">{t.home.noPosts}</p>
       </div>
     )}
-  </section>
-
-  <section class="bg-gray-50 dark:bg-darker py-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center">
-        {t.home.techStack}
-      </h2>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {techStack.map(tech => (
-          <div class="flex items-start gap-4 p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-            <div class="p-3 rounded-lg bg-primary/10 text-primary">
-              <tech.icon size={24} />
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-900 dark:text-white mb-1">{tech.name}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">{tech.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
   </section>
 </BaseLayout>
