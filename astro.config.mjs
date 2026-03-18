@@ -6,6 +6,13 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   site: "https://arhamcode.github.io",
 
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
+
+  transitions: true,
+
   i18n: {
     defaultLocale: "en",
     locales: ["en", "id"],

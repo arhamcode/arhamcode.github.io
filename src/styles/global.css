@@ -3,6 +3,31 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* View Transitions - Fade Slide */
+@keyframes slide-from-right {
+  from { opacity: 0; transform: translateX(20px); }
+}
+
+@keyframes slide-to-left {
+  to { opacity: 0; transform: translateX(-20px); }
+}
+
+@keyframes slide-from-left {
+  from { opacity: 0; transform: translateX(-20px); }
+}
+
+@keyframes slide-to-right {
+  to { opacity: 0; transform: translateX(20px); }
+}
+
+::view-transition-old(root) {
+  animation: 300ms ease-in-out both slide-to-left;
+}
+
+::view-transition-new(root) {
+  animation: 300ms ease-in-out both slide-from-right;
+}
+
 @theme {
   --color-primary: #3B49DF;
   --color-primary-hover: #2a3bc7;
