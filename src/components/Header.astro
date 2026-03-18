@@ -12,8 +12,7 @@ const t = getTranslation(locale);
 
 const currentLocale = locale;
 const getNavHref = (path: string) => {
-  if (currentLocale === 'en') return path;
-  return path === '/' ? `/${currentLocale}` : `/${currentLocale}${path}`;
+  return `/${currentLocale}${path === '/' ? '' : path}`;
 };
 
 const navItems = [
@@ -27,7 +26,7 @@ const currentPath = Astro.url.pathname;
 const isActive = (href: string) => {
   const targetPath = getNavHref(href);
   if (href === '/') {
-    return currentPath === targetPath || currentPath === `/${locale}` || currentPath === '';
+    return currentPath === targetPath;
   }
   return currentPath.startsWith(targetPath);
 };
