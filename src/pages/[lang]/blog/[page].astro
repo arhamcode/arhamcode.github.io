@@ -6,17 +6,33 @@ import { getCollection } from 'astro:content';
 import { getTranslation } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
-  return [
-    { params: { lang: 'en' }, props: { locale: 'en' } },
-    { params: { lang: 'id' }, props: { locale: 'id' } }
-  ];
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const locales = ['en', 'id'];
+  const POSTS_PER_PAGE = 6;
+
+  const paths = [];
+  for (const locale of locales) {
+    const posts = allPosts.filter(p => p.id.startsWith(locale + '/'));
+    const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+    
+    for (let page = 1; page <= totalPages; page++) {
+      paths.push({
+        params: { lang: locale, page: page.toString() },
+        props: { locale, currentPage: page, totalPages, totalPosts: posts.length }
+      });
+    }
+  }
+  return paths;
 }
 
 interface Props {
   locale: 'en' | 'id';
+  currentPage: number;
+  totalPages: number;
+  totalPosts: number;
 }
 
-const { locale } = Astro.props as Props;
+const { locale, currentPage, totalPages, totalPosts } = Astro.props;
 const t = getTranslation(locale);
 const POSTS_PER_PAGE = 6;
 
@@ -25,8 +41,8 @@ const posts = allPosts.filter(p => p.id.startsWith(locale + '/'));
 const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
 const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
-const paginatedPosts = sortedPosts.slice(0, POSTS_PER_PAGE);
+const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+const paginatedPosts = sortedPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
 const getPageUrl = (page: number) => {
   if (page === 1) return `/${locale}/blog`;
@@ -87,16 +103,33 @@ const getPageUrl = (page: number) => {
   {totalPages > 1 && (
     <div class="flex items-center justify-between mt-8 pt-6 border-t border-[#e5e5e5] dark:border-[#404040]">
       <div class="text-sm text-[#575757] dark:text-[#a1a1a1]">
-        1 / {totalPages}
+        {currentPage} / {totalPages}
       </div>
       <div class="flex items-center gap-2">
-        <a 
-          href={getPageUrl(2)}
-          class="flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md border border-[#e5e5e5] dark:border-[#404040] text-[#171717] dark:text-white hover:bg-[#f5f5f5] dark:hover:bg-[#262626] transition-colors"
-        >
-          Next
-          <ChevronRight size={16} />
-        </a>
+        {currentPage > 1 ? (
+          <a 
+            href={getPageUrl(currentPage - 1)}
+            class="flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md border border-[#e5e5e5] dark:border-[#404040] text-[#171717] dark:text-white hover:bg-[#f5f5f5] dark:hover:bg-[#262626] transition-colors"
+          >
+            <ChevronLeft size={16} />
+            Previous
+          </a>
+        ) : (
+          <span class="flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md border border-[#e5e5e5] dark:border-[#404040] text-[#71717a] dark:text-[#71717a] cursor-not-allowed opacity-50">
+            <ChevronLeft size={16} />
+            Previous
+          </span>
+        )}
+        
+        {currentPage < totalPages && (
+          <a 
+            href={getPageUrl(currentPage + 1)}
+            class="flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md border border-[#e5e5e5] dark:border-[#404040] text-[#171717] dark:text-white hover:bg-[#f5f5f5] dark:hover:bg-[#262626] transition-colors"
+          >
+            Next
+            <ChevronRight size={16} />
+          </a>
+        )}
       </div>
     </div>
   )}
