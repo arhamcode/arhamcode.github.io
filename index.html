@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arham Anwar | Profile</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-2: #0f1d32;
+      --panel: rgba(255,255,255,0.08);
+      --panel-strong: rgba(255,255,255,0.14);
+      --border: rgba(255,255,255,0.14);
+      --text: #f5f9ff;
+      --muted: #aebbd0;
+      --accent: #7dd3fc;
+      --accent-2: #8b5cf6;
+      --glow: rgba(125, 211, 252, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(125, 211, 252, 0.16), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.2), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg-2));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+
+    body::before { top: -80px; left: -80px; background: var(--accent); }
+    body::after { right: -90px; bottom: -100px; background: var(--accent-2); animation-duration: 18s; }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 26px 18px 60px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1.4fr 0.9fr;
+      align-items: center;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 50px rgba(2, 8, 23, 0.28);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+      transform: translateX(-120%);
+      animation: sweep 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sweep {
+      100% { transform: translateX(120%); }
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      margin: 0 0 10px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0 0 14px;
+      font-size: 1rem;
+    }
+
+    .typewriter {
+      font-size: 1.06rem;
+      color: #dce9ff;
+      min-height: 1.7em;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 7px 11px;
+      background: rgba(125, 211, 252, 0.16);
+      border: 1px solid rgba(125, 211, 252, 0.25);
+      color: #dbeafe;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      text-decoration: none;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(125,211,252,0.18), rgba(139,92,246,0.16));
+      border-color: rgba(125,211,252,0.35);
+    }
+
+    .profile-card {
+      position: relative;
+      padding: 20px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(255,255,255,0.11), rgba(255,255,255,0.05));
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      animation: floatUp 7s ease-in-out infinite;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 26px rgba(125, 211, 252, 0.22);
+      margin-bottom: 8px;
+    }
+
+    .stat-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stat {
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat strong { font-size: 1.1rem; display: block; margin-bottom: 4px; }
+    .stat span { color: var(--muted); font-size: 0.9rem; }
+
+    section {
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      backdrop-filter: blur(14px);
+      box-shadow: 0 14px 36px rgba(2, 8, 23, 0.2);
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      margin: 0 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid-2 {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(125, 211, 252, 0.3);
+    }
+
+    .card ul { margin: 8px 0 0 18px; color: var(--muted); line-height: 1.7; }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .chip {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.92rem;
+      color: #e3efff;
+    }
+
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      min-width: 110px;
+    }
+
+    .stats-wrap {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-top: 10px;
+    }
+
+    .stats-wrap img {
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .quote {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-left: 3px solid rgba(125, 211, 252, 0.45);
+      background: rgba(125, 211, 252, 0.08);
+      border-radius: 10px;
+      color: #dce9ff;
+      font-style: italic;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .container { padding: 16px 12px 48px; }
+      .hero, section { padding: 16px; }
+      .stat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div>
+        <span class="pill">Software Engineer • Mobile AI</span>
+        <h1>Hi there 👋<br />I'm Arham Anwar</h1>
+        <div id="typewriter" class="typewriter"></div>
+        <p>I build cross-platform applications, design scalable backend systems, and explore on-device AI for mobile experiences.</p>
+        <div class="actions">
+          <a class="btn" href="#stack">Explore Stack</a>
+          <a class="btn" href="#connect">Let's Connect</a>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="avatar">🤖</div>
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>Flutter</strong>
+            <span>Cross-platform apps</span>
+          </div>
+          <div class="stat">
+            <strong>AI</strong>
+            <span>On-device intelligence</span>
+          </div>
+          <div class="stat">
+            <strong>NestJS</strong>
+            <span>Scalable backend</span>
+          </div>
+          <div class="stat">
+            <strong>Docker</strong>
+            <span>Modern delivery</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">🚀 About Me</h2>
+      <div class="grid-2">
+        <div class="card">
+          <strong>What I do</strong>
+          <ul>
+            <li>Build high-performance Flutter applications</li>
+            <li>Design clean architecture for scalable systems</li>
+            <li>Explore face recognition and mobile AI with TensorFlow Lite</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Current focus</strong>
+          <ul>
+            <li>Enterprise Flutter solutions</li>
+            <li>Face Recognition & Computer Vision</li>
+            <li>Agentic AI and robust backend architecture</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <h2 class="section-title">💻 Tech Stack</h2>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Mobile</strong>
+          <div class="badge-grid">
+            <span class="badge">Flutter</span>
+            <span class="badge">Dart</span>
+          </div>
+        </div>
+        <div class="card">
+          <strong>Backend</strong>
+          <div class="badge-grid">
+            <span class="badge">NestJS</span>
+            <span class="badge">Node.js</span>
+          </div>
+        </div>
+        <div class="card">
+          <strong>Database</strong>
+          <div class="badge-grid">
+            <span class="badge">SQL Server</span>
+            <span class="badge">Firebase</span>
+          </div>
+        </div>
+        <div class="card">
+          <strong>Architecture & DevOps</strong>
+          <div class="chip-row">
+            <span class="chip">Clean Architecture</span>
+            <span class="chip">Riverpod</span>
+            <span class="chip">Bloc</span>
+            <span class="chip">REST API</span>
+            <span class="chip">JWT</span>
+            <span class="chip">CI/CD</span>
+            <span class="chip">Docker</span>
+            <span class="chip">GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">🔭 Current Interests</h2>
+      <div class="chip-row">
+        <span class="chip">Face Recognition</span>
+        <span class="chip">TensorFlow Lite</span>
+        <span class="chip">InsightFace</span>
+        <span class="chip">Mobile AI</span>
+        <span class="chip">Computer Vision</span>
+        <span class="chip">Enterprise Flutter</span>
+        <span class="chip">Agentic AI</span>
+        <span class="chip">Backend Architecture</span>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">📊 GitHub Statistics</h2>
+      <div class="stats-wrap">
+        <img src="https://readme-stats-github.pages.dev/api?username=arhamcode&theme=github_dark&show_icons=true&hide_border=true" alt="GitHub stats" />
+        <img src="https://readme-stats-github.pages.dev/api/top-langs?username=arhamcode&layout=compact&theme=github_dark&hide_border=true" alt="Most used languages" />
+      </div>
+    </section>
+
+    <section id="connect">
+      <h2 class="section-title">🤝 Let's Connect</h2>
+      <div class="actions">
+        <a class="btn" href="https://github.com/arhamcode">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/">LinkedIn</a>
+        <a class="btn" href="mailto:hello@example.com">Email</a>
+        <a class="btn" href="#">Portfolio</a>
+      </div>
+      <div class="quote">“Simplicity is the ultimate sophistication.” — Leonardo da Vinci</div>
+    </section>
+  </div>
+
+  <script>
+    const phrases = [
+      'Flutter Engineer • Mobile AI Enthusiast • Software Architect',
+      'Building beautiful apps with scalable architecture',
+      'Exploring on-device AI and modern product experiences'
+    ];
+
+    const el = document.getElementById('typewriter');
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeLoop() {
+      const current = phrases[phraseIndex];
+      if (!isDeleting) {
+        el.textContent = current.slice(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === current.length) {
+          isDeleting = true;
+          setTimeout(typeLoop, 1200);
+          return;
+        }
+      } else {
+        el.textContent = current.slice(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+      }
+      setTimeout(typeLoop, isDeleting ? 45 : 70);
+    }
+
+    typeLoop();
+  </script>
+</body>
+</html>
