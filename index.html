@@ -261,6 +261,44 @@
       margin-top: 8px;
     }
 
+    .tech-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+      margin-top: 10px;
+    }
+
+    .tech-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .tech-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(125, 211, 252, 0.3);
+      background: rgba(125, 211, 252, 0.1);
+    }
+
+    .tech-logo {
+      width: 22px;
+      height: 22px;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    .tech-item span {
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
     .badge {
       display: inline-flex;
       align-items: center;
@@ -321,27 +359,6 @@
           <a class="btn" href="#connect">Let's Connect</a>
         </div>
       </div>
-      <div class="profile-card">
-        <div class="avatar">🤖</div>
-        <div class="stat-grid">
-          <div class="stat">
-            <strong>Flutter</strong>
-            <span>Cross-platform apps</span>
-          </div>
-          <div class="stat">
-            <strong>AI</strong>
-            <span>On-device intelligence</span>
-          </div>
-          <div class="stat">
-            <strong>NestJS</strong>
-            <span>Scalable backend</span>
-          </div>
-          <div class="stat">
-            <strong>Docker</strong>
-            <span>Modern delivery</span>
-          </div>
-        </div>
-      </div>
     </section>
 
     <section>
@@ -371,36 +388,62 @@
       <div class="grid-2">
         <div class="card">
           <strong>Mobile</strong>
-          <div class="badge-grid">
-            <span class="badge">Flutter</span>
-            <span class="badge">Dart</span>
+          <div class="tech-grid">
+            <a class="tech-item" href="https://flutter.dev" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-plain.svg" alt="Flutter logo" />
+              <span>Flutter</span>
+            </a>
+            <a class="tech-item" href="https://dart.dev" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-plain.svg" alt="Dart logo" />
+              <span>Dart</span>
+            </a>
           </div>
         </div>
         <div class="card">
           <strong>Backend</strong>
-          <div class="badge-grid">
-            <span class="badge">NestJS</span>
-            <span class="badge">Node.js</span>
+          <div class="tech-grid">
+            <a class="tech-item" href="https://nestjs.com" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-plain.svg" alt="NestJS logo" />
+              <span>NestJS</span>
+            </a>
+            <a class="tech-item" href="https://nodejs.org" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-plain.svg" alt="Node.js logo" />
+              <span>Node.js</span>
+            </a>
           </div>
         </div>
         <div class="card">
           <strong>Database</strong>
-          <div class="badge-grid">
-            <span class="badge">SQL Server</span>
-            <span class="badge">Firebase</span>
+          <div class="tech-grid">
+            <a class="tech-item" href="https://www.microsoft.com/en-us/sql-server" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="SQL Server logo" />
+              <span>SQL Server</span>
+            </a>
+            <a class="tech-item" href="https://firebase.google.com" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase logo" />
+              <span>Firebase</span>
+            </a>
           </div>
         </div>
         <div class="card">
           <strong>Architecture & DevOps</strong>
-          <div class="chip-row">
+          <div class="tech-grid">
+            <a class="tech-item" href="https://www.docker.com" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg" alt="Docker logo" />
+              <span>Docker</span>
+            </a>
+            <a class="tech-item" href="https://github.com/features/actions" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub Actions logo" />
+              <span>GitHub Actions</span>
+            </a>
+          </div>
+          <div class="chip-row" style="margin-top: 14px;">
             <span class="chip">Clean Architecture</span>
             <span class="chip">Riverpod</span>
             <span class="chip">Bloc</span>
             <span class="chip">REST API</span>
             <span class="chip">JWT</span>
             <span class="chip">CI/CD</span>
-            <span class="chip">Docker</span>
-            <span class="chip">GitHub Actions</span>
           </div>
         </div>
       </div>
