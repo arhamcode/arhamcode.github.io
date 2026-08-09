@@ -6,16 +6,16 @@
   <title>Arham Anwar | Profile</title>
   <style>
     :root {
-      --bg: #07111f;
-      --bg-2: #0f1d32;
-      --panel: rgba(255,255,255,0.08);
-      --panel-strong: rgba(255,255,255,0.14);
-      --border: rgba(255,255,255,0.14);
-      --text: #f5f9ff;
-      --muted: #aebbd0;
-      --accent: #7dd3fc;
-      --accent-2: #8b5cf6;
-      --glow: rgba(125, 211, 252, 0.28);
+      --bg: #f2efe6;
+      --bg-2: #e5dfd6;
+      --panel: #fffdf9;
+      --panel-strong: #f0e9dd;
+      --border: #1f1a13;
+      --text: #1f1a13;
+      --muted: #6d6155;
+      --accent: #ff4961;
+      --accent-2: #1a63ff;
+      --shadow: #1f1a13;
     }
 
     * { box-sizing: border-box; }
@@ -24,34 +24,9 @@
       margin: 0;
       font-family: Inter, "Segoe UI", Roboto, sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(125, 211, 252, 0.16), transparent 25%),
-        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.2), transparent 30%),
-        linear-gradient(135deg, var(--bg), var(--bg-2));
+      background: var(--bg);
       min-height: 100vh;
       overflow-x: hidden;
-    }
-
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      inset: auto;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.35;
-      pointer-events: none;
-      animation: drift 14s ease-in-out infinite alternate;
-    }
-
-    body::before { top: -80px; left: -80px; background: var(--accent); }
-    body::after { right: -90px; bottom: -100px; background: var(--accent-2); animation-duration: 18s; }
-
-    @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to { transform: translate(40px, 30px) scale(1.08); }
     }
 
     .container {
@@ -64,65 +39,51 @@
 
     .hero {
       display: grid;
-      gap: 20px;
-      grid-template-columns: 1.4fr 0.9fr;
-      align-items: center;
-      padding: 28px;
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
-      backdrop-filter: blur(18px);
-      box-shadow: 0 20px 50px rgba(2, 8, 23, 0.28);
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
-      transform: translateX(-120%);
-      animation: sweep 8s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes sweep {
-      100% { transform: translateX(120%); }
+      gap: 18px;
+      grid-template-columns: 1fr;
+      align-items: start;
+      padding: 32px;
+      border: 4px solid var(--border);
+      background: var(--panel);
+      box-shadow: 12px 12px 0 var(--shadow);
     }
 
     .hero h1 {
-      font-size: clamp(1.8rem, 3vw, 2.7rem);
-      margin: 0 0 10px;
-      line-height: 1.1;
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin: 0 0 12px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
 
     .hero p {
       color: var(--muted);
       line-height: 1.7;
-      margin: 0 0 14px;
+      margin: 0 0 18px;
       font-size: 1rem;
+      width: 100%;
+      max-width: none;
     }
 
     .typewriter {
-      font-size: 1.06rem;
-      color: #dce9ff;
+      font-size: 1.05rem;
+      color: var(--text);
       min-height: 1.7em;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.02em;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .pill {
       display: inline-block;
-      padding: 7px 11px;
-      background: rgba(125, 211, 252, 0.16);
-      border: 1px solid rgba(125, 211, 252, 0.25);
-      color: #dbeafe;
-      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--text);
+      color: var(--panel);
+      border: 3px solid var(--border);
+      border-radius: 0;
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
 
     .actions {
@@ -134,106 +95,107 @@
 
     .btn {
       text-decoration: none;
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      color: var(--panel);
+      padding: 12px 16px;
+      border-radius: 4px;
+      border: 4px solid var(--border);
+      background: var(--text);
+      font-weight: 700;
+      transition: transform 0.15s ease, background 0.15s ease;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      background: linear-gradient(135deg, rgba(125,211,252,0.18), rgba(139,92,246,0.16));
-      border-color: rgba(125,211,252,0.35);
+      background: var(--accent);
+      border-color: var(--border);
     }
 
     .profile-card {
       position: relative;
-      padding: 20px;
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, rgba(255,255,255,0.11), rgba(255,255,255,0.05));
+      padding: 22px;
+      border-radius: 4px;
+      border: 4px solid var(--border);
+      background: var(--panel);
       min-height: 260px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 12px;
-      animation: floatUp 7s ease-in-out infinite;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-    }
-
-    @keyframes floatUp {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      gap: 14px;
+      box-shadow: 10px 10px 0 var(--shadow);
     }
 
     .avatar {
-      width: 88px;
-      height: 88px;
-      border-radius: 24px;
+      width: 84px;
+      height: 84px;
+      border-radius: 4px;
       display: grid;
       place-items: center;
       font-size: 2rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 12px 26px rgba(125, 211, 252, 0.22);
+      background: var(--text);
+      color: var(--panel);
       margin-bottom: 8px;
     }
 
     .stat-grid {
       display: grid;
-      gap: 10px;
+      gap: 12px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .stat {
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
+      padding: 14px;
+      border-radius: 4px;
+      background: var(--panel-strong);
+      border: 3px solid var(--border);
     }
 
-    .stat strong { font-size: 1.1rem; display: block; margin-bottom: 4px; }
-    .stat span { color: var(--muted); font-size: 0.9rem; }
+    .stat strong { font-size: 1.05rem; display: block; margin-bottom: 6px; }
+    .stat span { color: var(--muted); font-size: 0.92rem; }
 
     section {
       margin-top: 22px;
       padding: 22px;
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-      backdrop-filter: blur(14px);
-      box-shadow: 0 14px 36px rgba(2, 8, 23, 0.2);
+      border-radius: 4px;
+      border: 4px solid var(--border);
+      background: var(--panel);
+      box-shadow: 10px 10px 0 var(--shadow);
     }
 
     .section-title {
-      font-size: 1.15rem;
-      margin: 0 0 12px;
+      font-size: 1.2rem;
+      margin: 0 0 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      font-weight: 800;
     }
 
     .grid-2 {
       display: grid;
-      gap: 14px;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 
     .card {
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      padding: 18px;
+      border-radius: 4px;
+      background: var(--panel-strong);
+      border: 4px solid var(--border);
+      transition: transform 0.15s ease, border-color 0.15s ease;
     }
 
     .card:hover {
       transform: translateY(-2px);
-      border-color: rgba(125, 211, 252, 0.3);
+      border-color: var(--accent);
+    }
+
+    .card-full-width {
+      grid-column: 1 / -1;
     }
 
     .card ul { margin: 8px 0 0 18px; color: var(--muted); line-height: 1.7; }
@@ -241,73 +203,81 @@
     .chip-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 6px;
+      gap: 12px;
+      margin-top: 10px;
     }
 
     .chip {
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      padding: 12px 14px;
+      border-radius: 4px;
+      background: var(--panel);
+      border: 4px solid var(--border);
       font-size: 0.92rem;
-      color: #e3efff;
+      color: var(--text);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     .badge-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 8px;
+      gap: 12px;
+      margin-top: 12px;
     }
 
     .tech-grid {
       display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-      margin-top: 10px;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-top: 14px;
     }
 
     .tech-item {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 4px;
+      background: var(--panel-strong);
+      border: 4px solid var(--border);
       color: var(--text);
       text-decoration: none;
-      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     }
 
     .tech-item:hover {
       transform: translateY(-2px);
-      border-color: rgba(125, 211, 252, 0.3);
-      background: rgba(125, 211, 252, 0.1);
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--panel);
     }
 
     .tech-logo {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       display: block;
-      filter: brightness(0) invert(1);
+      filter: none;
     }
 
     .tech-item span {
       font-size: 0.95rem;
       white-space: nowrap;
+      font-weight: 700;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      padding: 10px 14px;
+      border-radius: 4px;
+      background: var(--panel);
+      border: 4px solid var(--border);
       min-width: 110px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
     }
 
     .stats-wrap {
@@ -320,19 +290,20 @@
     .stats-wrap img {
       width: 100%;
       height: auto;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
+      border-radius: 4px;
+      border: none;
+      background: var(--panel);
     }
 
     .quote {
       margin-top: 14px;
-      padding: 12px 14px;
-      border-left: 3px solid rgba(125, 211, 252, 0.45);
-      background: rgba(125, 211, 252, 0.08);
-      border-radius: 10px;
-      color: #dce9ff;
-      font-style: italic;
+      padding: 16px;
+      border: 4px solid var(--border);
+      background: var(--panel-strong);
+      border-radius: 4px;
+      color: var(--text);
+      font-style: normal;
+      font-weight: 700;
     }
 
     @media (max-width: 860px) {
@@ -369,7 +340,7 @@
           <ul>
             <li>Build high-performance Flutter applications</li>
             <li>Design clean architecture for scalable systems</li>
-            <li>Explore face recognition and mobile AI with TensorFlow Lite</li>
+            <li>Explore face recognition and mobile AI with LiteRT</li>
           </ul>
         </div>
         <div class="card">
@@ -403,21 +374,25 @@
           <strong>Backend</strong>
           <div class="tech-grid">
             <a class="tech-item" href="https://nestjs.com" target="_blank" rel="noreferrer noopener">
-              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-plain.svg" alt="NestJS logo" />
+              <img class="tech-logo" src="https://nestjs.com/logo.svg" alt="NestJS logo" />
               <span>NestJS</span>
             </a>
             <a class="tech-item" href="https://nodejs.org" target="_blank" rel="noreferrer noopener">
               <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-plain.svg" alt="Node.js logo" />
               <span>Node.js</span>
             </a>
+            <a class="tech-item" href="https://serverpod.dev" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://raw.githubusercontent.com/serverpod/serverpod_docs/main/static/img/favicon.png" alt="Serverpod logo" />
+              <span>Serverpod</span>
+            </a>
           </div>
         </div>
         <div class="card">
           <strong>Database</strong>
           <div class="tech-grid">
-            <a class="tech-item" href="https://www.microsoft.com/en-us/sql-server" target="_blank" rel="noreferrer noopener">
-              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="SQL Server logo" />
-              <span>SQL Server</span>
+            <a class="tech-item" href="https://www.postgresql.org" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL logo" />
+              <span>PostgreSQL</span>
             </a>
             <a class="tech-item" href="https://firebase.google.com" target="_blank" rel="noreferrer noopener">
               <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase logo" />
@@ -425,7 +400,32 @@
             </a>
           </div>
         </div>
-        <div class="card">
+        <div class="card card-full-width">
+          <strong>Embedded & IoT</strong>
+          <div class="tech-grid">
+            <a class="tech-item" href="https://www.arduino.cc" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-plain.svg" alt="Arduino logo" />
+              <span>Arduino</span>
+            </a>
+            <a class="tech-item" href="https://www.espressif.com/en/products/socs/esp32" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://www.espressif.com/sites/all/themes/espressif/images/logo-guidelines/primary-vertical-logo.png" alt="ESP32 logo" />
+              <span>ESP32</span>
+            </a>
+            <a class="tech-item" href="https://www.raspberrypi.com" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-plain.svg" alt="Raspberry Pi logo" />
+              <span>Raspberry Pi</span>
+            </a>
+            <a class="tech-item" href="https://developer.nvidia.com/embedded/jetson-nano" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Nvidia_logo.svg" alt="NVIDIA logo" />
+              <span>Jetson Nano</span>
+            </a>
+            <a class="tech-item" href="https://thingsboard.io" target="_blank" rel="noreferrer noopener">
+              <img class="tech-logo" src="https://thingsboard.io/images/mediakit/thingsboard_logo_black_l.svg" alt="IoT logo" />
+              <span>IoT</span>
+            </a>
+          </div>
+        </div>
+        <div class="card card-full-width">
           <strong>Architecture & DevOps</strong>
           <div class="tech-grid">
             <a class="tech-item" href="https://www.docker.com" target="_blank" rel="noreferrer noopener">
@@ -452,8 +452,12 @@
     <section>
       <h2 class="section-title">🔭 Current Interests</h2>
       <div class="chip-row">
+        <span class="chip">Arduino</span>
+        <span class="chip">ESP32</span>
+        <span class="chip">NVIDIA Jetson Nano</span>
+        <span class="chip">IoT</span>
         <span class="chip">Face Recognition</span>
-        <span class="chip">TensorFlow Lite</span>
+        <span class="chip">LiteRT</span>
         <span class="chip">InsightFace</span>
         <span class="chip">Mobile AI</span>
         <span class="chip">Computer Vision</span>
@@ -475,9 +479,8 @@
       <h2 class="section-title">🤝 Let's Connect</h2>
       <div class="actions">
         <a class="btn" href="https://github.com/arhamcode">GitHub</a>
-        <a class="btn" href="https://www.linkedin.com/">LinkedIn</a>
-        <a class="btn" href="mailto:hello@example.com">Email</a>
-        <a class="btn" href="#">Portfolio</a>
+        <a class="btn" href="https://www.linkedin.com/in/arham-anwar/">LinkedIn</a>
+        <a class="btn" href="mailto:arham.code@gmail.com">Email</a>
       </div>
       <div class="quote">“Simplicity is the ultimate sophistication.” — Leonardo da Vinci</div>
     </section>
